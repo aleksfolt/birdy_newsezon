@@ -628,41 +628,46 @@ def crutki(call):
 	keyboard = telebot.types.InlineKeyboardMarkup(row_width=2)
 	button_1 = telebot.types.InlineKeyboardButton(text="Купить", callback_data=f'buying_crutka_{unique_number}')
 	keyboard.add(button_1)
-	bot.send_message(call.message.chat.id, f"Купить крутку. Цена: 35000 поинтов:\nБаланс поинтов: {user_data['points']}", reply_markup=keyboard)
+	bot.send_message(call.message.chat.id, f"Купить крутку. Цена: 50000 поинтов:\nБаланс поинтов: {user_data['points']}", reply_markup=keyboard)
 	
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('buying_crutka'))
 def buy_crutka(call):
-	user_id = str(call.from_user.id)
-	unique_number = int(call.data.split('_')[-1])
-	if user_button.get(user_id) != unique_number:
-		bot.answer_callback_query(call.id, "Не ваша кнопка.", show_alert=True)
-		return
-	data = load_data_cards()
-	user_nickname = call.from_user.first_name
-	user_data = data.get(user_id, {'birds': [], 'last_usage': 0, 'points': 0, 'nickname': user_nickname})
-	if user_data['points'] >= 35000:
-		eligible_birds = [bird for bird in birds if bird["rarity"] == "Крутка"]
-		chosen_bird = None
-		attempt_count = 0
-		while attempt_count < 100:
-			chosen_bird = random.choice(eligible_birds)
-			if chosen_bird['name'] not in user_data['birds']:
-				break
-			attempt_count += 1
-		
-		if chosen_bird and chosen_bird['name'] not in user_data['birds']:
-			user_data['birds'].append(chosen_bird['name'])
-			user_data['points'] -= 35000
-			data[user_id] = user_data
-			save_data_2(data)
-			photo_data = chosen_bird['photo']
-			with open(photo_data, 'rb') as photo_file:
-				bot.send_photo(call.message.chat.id, photo_file, caption=f"{user_nickname} Вам выпала {chosen_bird['name']}!")
-		else:
-			bot.send_message(call.message.chat.id, f"{user_nickname} Вы уже собрали все крутки.")
-	else:
-		bot.send_message(call.message.chat.id, f"{user_nickname} Недостаточно очков для покупки!")
+    user_id = str(call.from_user.id)
+    unique_number = int(call.data.split('_')[-1])
+    if user_button.get(user_id) != unique_number:
+        bot.answer_callback_query(call.id, "Не ваша кнопка.", show_alert=True)
+        return
+    
+    data = load_data_cards()
+    user_nickname = call.from_user.first_name
+    user_data = data.get(user_id, {'birds': [], 'last_usage': 0, 'points': 0, 'nickname': user_nickname})
+    
+    if user_data['points'] >= 50000:
+        excluded_birds = ["Птичка зефирка", "Птичка тортик", "Птичка печенька", "Птичка Круассан"]
+        
+        eligible_birds = [bird for bird in birds if bird["rarity"] == "Крутка" and bird["name"] not in excluded_birds]
+        chosen_bird = None
+        attempt_count = 0
+        
+        while attempt_count < 100:
+            chosen_bird = random.choice(eligible_birds)
+            if chosen_bird['name'] not in user_data['birds']:
+                break
+            attempt_count += 1
+        
+        if chosen_bird and chosen_bird['name'] not in user_data['birds']:
+            user_data['birds'].append(chosen_bird['name'])
+            user_data['points'] -= 50000
+            data[user_id] = user_data
+            save_data_2(data)
+            photo_data = chosen_bird['photo']
+            with open(photo_data, 'rb') as photo_file:
+                bot.send_photo(call.message.chat.id, photo_file, caption=f"{user_nickname} Вам выпала {chosen_bird['name']}!")
+        else:
+            bot.send_message(call.message.chat.id, f"{user_nickname} Вы уже собрали все крутки.")
+    else:
+        bot.send_message(call.message.chat.id, f"{user_nickname} Недостаточно очков для покупки!")
 
 
 
