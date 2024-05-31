@@ -44,7 +44,12 @@
     {"rarity": "Крутка", "name": "Птичка печенька", "place": "Конфетный лес", "photo": "images/bird_krutka.jpg"},
     {"rarity": "Крутка", "name": "Птичка Круассан", "place": "Конфетный лес", "photo": "images/bird_krutka_2.jpg"},
     {"rarity": "Крутка", "name": "Птичка тортик", "place": "Конфетный лес", "photo": "images/bird_krutka_3.jpg"},
-    {"rarity": "Крутка", "name": "Птичка зефирка", "place": "Конфетный лес", "photo": "images/bird_krutka_4.jpg"}
+    {"rarity": "Крутка", "name": "Птичка зефирка", "place": "Конфетный лес", "photo": "images/bird_krutka_4.jpg"},
+    {"rarity": "Крутка", "name": "Птица бог воды", "place": "Страна стихий", "photo": "images/bird_krutka_5.jpg"},
+    {"rarity": "Крутка", "name": "Птица бог огня", "place": "Страна стихий", "photo": "images/bird_krutka_6.jpg"},
+    {"rarity": "Крутка", "name": "Птица бог камня", "place": "Страна стихий", "photo": "images/bird_krutka_7.jpg"},
+    {"rarity": "Крутка", "name": "Птица бог грома", "place": "Страна стихий", "photo": "images/bird_krutka_8.jpg"},
+    {"rarity": "Крутка", "name": "Птица бог растений", "place": "Страна стихий", "photo": "images/bird_krutka_9.jpg"},
   ],
   "tea_names": [
     "Зеленый чай",
