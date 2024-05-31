@@ -22,18 +22,18 @@ def config_func():
 		data = json.load(file)
 	return data
 
-Ñonfig_data = config_func()
+сonfig_data = config_func()
 
-bot = telebot.TeleBot(Ñonfig_data['token'])
+bot = telebot.TeleBot(сonfig_data['token'])
 crypto = AioCryptoPay(token='184441:AAVfvJNbxjFh4FyvqvlHjym8TzlX8gtmTxr', network=Networks.MAIN_NET)
 telebot.apihelper.READ_TIMEOUT = 60
 
 DATA_FILE = 'tea_data_2.json'
 DATA_FILE_2 = 'users_cards.json'
 DATA_FILE_3 = "promo.json"
-tea_names = Ñonfig_data['tea_names']
-birds = Ñonfig_data['birds']
-products = Ñonfig_data['products']
+tea_names = сonfig_data['tea_names']
+birds = сonfig_data['birds']
+products = сonfig_data['products']
 user_button = {}
 loop = asyncio.new_event_loop()
 
@@ -105,23 +105,23 @@ def save_premium_users(users):
 @bot.message_handler(commands=['start'])
 def start_command(message):
 	first_name = message.from_user.first_name
-	text = f'''Ð¥ÐµÐµÐ¹ ðŸ•Š {first_name}! Ð¯ Birdy. Ð‘Ð¾Ñ‚ Ð´Ð»Ñ Ñ€Ð°Ð·Ð²Ð»ÐµÑ‡ÐµÐ½Ð¸Ð¹, Ñ‚ÑƒÑ‚ Ð¼Ð¾Ð¶ÐµÑˆÑŒ Ð¿Ð¸Ñ‚ÑŒ Ñ‡Ð°Ð¹ Ð¸Ð»Ð¸ Ð¾Ñ‚ÐºÑ€Ñ‹Ð²Ð°Ñ‚ÑŒ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ¸, Ð²ÑÐµ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñ‹ Ð¼Ð¾Ð¶Ð½Ð¾ Ð¿Ð¾ÑÐ¼Ð¾Ñ‚Ñ€ÐµÑ‚ÑŒ Ð¿Ð¾ ÐºÐ¾Ð¼Ð°Ð½Ð´Ðµ /help.'''
+	text = f'''Хеей 🕊 {first_name}! Я Birdy. Бот для развлечений, тут можешь пить чай или открывать карточки, все команды можно посмотреть по команде /help.'''
 	bot.send_message(message.chat.id, text)
 
 @bot.message_handler(commands=['help'])
 def help_command(message):
 	text = '''
-ÐšÑ€Ð°Ñ‚ÐºÐ¾Ðµ Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ðµ ÐºÐ¾Ð¼Ð°Ð½Ð´:
-/profile, "ÐŸÑ€Ð¾Ñ„Ð¸Ð»ÑŒ" - Ð²Ð°Ñˆ Ð¿Ñ€Ð¾Ñ„Ð¸Ð»ÑŒ
-/chai, "Ð§Ð°Ð¹" - Ð²Ñ‹Ð¿Ð¸Ñ‚ÑŒ Ñ‡Ð°Ð¹
-/chai\_top, "Ð¢Ð¾Ð¿ Ñ‡Ð°Ñ" - Ñ‚Ð¾Ð¿ Ð¿Ð¾ Ñ‡Ð°ÑŽ
-/knock, "ÐŸÐ¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÐºÐ°Ñ€Ñ‚Ñƒ" - Ð½Ð°Ð±Ð»ÑŽÐ´ÐµÐ½Ð¸Ðµ Ð·Ð° Ð¿Ñ‚Ð¸Ñ‡ÐºÐ°Ð¼Ð¸"
-/cards\_top "Ð¢Ð¾Ð¿ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐµÐº" - Ñ‚Ð¾Ð¿ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐµÐº Ð¿Ð¾ Ð¿Ð¾Ð¸Ð½Ñ‚Ð°Ð¼ Ð¸ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ñƒ
-/krone, "ÐœÐ¾Ð½ÐµÑ‚Ð°", "ÐšÑ€Ð¾Ð½Ð°" - Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¼Ð¾Ð½ÐµÑ‚
-/shop, "ÐœÐ°Ð³Ð°Ð·Ð¸Ð½" - Ð¼Ð°Ð³Ð°Ð·Ð¸Ð½, Ñ Ñ‚Ð¾Ð²Ð°Ñ€Ð°Ð¼Ð¸ Ð·Ð° Ð¼Ð¾Ð½ÐµÑ‚Ñ‹
-/goods, "ÐŸÐ¾ÐºÑƒÐ¿ÐºÐ¸" - Ð²Ð°ÑˆÐ¸ Ð¿Ð¾ÐºÑƒÐ¿ÐºÐ¸
+Краткое описание команд:
+/profile, "Профиль" - ваш профиль
+/chai, "Чай" - выпить чай
+/chai\_top, "Топ чая" - топ по чаю
+/knock, "Получить карту" - наблюдение за птичками"
+/cards\_top "Топ карточек" - топ карточек по поинтам и количеству
+/krone, "Монета", "Крона" - получение монет
+/shop, "Магазин" - магазин, с товарами за монеты
+/goods, "Покупки" - ваши покупки
 
-ÐŸÐ¾Ð»Ð½Ñ‹Ð¹ ÑÐ¿Ð¸ÑÐ¾Ðº ÐºÐ¾Ð¼Ð°Ð½Ð´ Ñ Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸ÐµÐ¼ [Ñ‚ÑƒÑ‚](https://teletype.in/@hlb_folt/jNICgr9tP50).'''
+Полный список команд с описанием [тут](https://teletype.in/@hlb_folt/jNICgr9tP50).'''
 	bot.send_message(message.chat.id, text, parse_mode='Markdown', disable_web_page_preview=True)
 
 
@@ -153,35 +153,35 @@ def chai_top(message):
 
 		premium_users = load_premium_users() 
 		
-		message_text = "Ð¢Ð¾Ð¿-10 Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÐµÐ¹ Ð¿Ð¾ Ð¾Ð±ÑŠÐµÐ¼Ñƒ Ð²Ñ‹Ð¿Ð¸Ñ‚Ð¾Ð³Ð¾ Ñ‡Ð°Ñ:\n\n"
+		message_text = "Топ-10 пользователей по объему выпитого чая:\n\n"
 		for i, (user_id, user_data) in enumerate(top_10, 1):
 			nickname = user_data.get('nickname', 'Unknown')
 			total_volume = user_data['total_volume']
 
 			if user_id in premium_users:
-				premium_icon = "ðŸ’Ž"
+				premium_icon = "💎"
 			else:
 				premium_icon = ""
 
 			if i == 1:
-				comment = " - ÐšÐ¾Ñ€Ð¾Ð»ÑŒ"
+				comment = " - Король"
 			elif 2 <= i <= 3:
-				comment = " - Ð“ÐµÑ€Ñ†Ð¾Ð³"
+				comment = " - Герцог"
 			elif 4 <= i <= 5:
-				comment = " - ÐœÐ°Ñ€ÐºÐ¸Ð·"
+				comment = " - Маркиз"
 			elif 6 <= i <= 7:
-				comment = " - Ð“Ñ€Ð°Ñ„"
+				comment = " - Граф"
 			elif 8 <= i <= 9:
-				comment = " - Ð’Ð¸ÐºÐ¾Ð½Ñ‚"
+				comment = " - Виконт"
 			elif i == 10:
-				comment = " - Ð‘Ð°Ñ€Ð¾Ð½"
+				comment = " - Барон"
 
-			message_text += f"{i}. {premium_icon} {nickname}: {total_volume} Ð¼Ð». {comment}\n"
+			message_text += f"{i}. {premium_icon} {nickname}: {total_volume} мл. {comment}\n"
 
 		bot.send_message(message.chat.id, message_text)
 	except Exception as e:
-		bot.send_message(message.chat.id, "Ð’Ñ€ÐµÐ¼ÐµÐ½Ð½Ð°Ñ Ð¾ÑˆÐ¸Ð±ÐºÐ° Ð² Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐµ, Ð¿Ð¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚Ðµ Ð¿Ð¾Ð·Ð¶Ðµ.")
-		bot.send_message(1130692453, f"ÐŸÑ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° Ð¾ÑˆÐ¸Ð±ÐºÐ° Ð¿Ñ€Ð¸ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐµ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñ‹: /chai_top Ð² Ñ‡Ð°Ñ‚Ðµ: {message.chat.id}. {e}")
+		bot.send_message(message.chat.id, "Временная ошибка в обработке, повторите позже.")
+		bot.send_message(1130692453, f"Произошла ошибка при обработке команды: /chai_top в чате: {message.chat.id}. {e}")
 
 
 def send_random_tea(message):
@@ -199,7 +199,7 @@ def send_random_tea(message):
 	if time_since_last_drink < 600:
 		remaining_minutes = int(time_left // 60)
 		remaining_seconds = int(time_left % 60)
-		bot.reply_to(message, f"ÐŸÐ¾Ð¶Ð°Ð»ÑƒÐ¹ÑÑ‚Ð°, Ð¿Ð¾Ð´Ð¾Ð¶Ð´Ð¸Ñ‚Ðµ ÐµÑ‰Ðµ {remaining_minutes} Ð¼Ð¸Ð½ÑƒÑ‚ {remaining_seconds} ÑÐµÐºÑƒÐ½Ð´ Ð¿ÐµÑ€ÐµÐ´ ÑÐ»ÐµÐ´ÑƒÑŽÑ‰ÐµÐ¹ Ñ‡Ð°ÑˆÐºÐ¾Ð¹ Ñ‡Ð°Ñ.")
+		bot.reply_to(message, f"Пожалуйста, подождите еще {remaining_minutes} минут {remaining_seconds} секунд перед следующей чашкой чая.")
 		return
 
 	random_tea = random.choice(tea_names)
@@ -209,7 +209,7 @@ def send_random_tea(message):
 		random_volume = random.randint(500, 2000)
 	else:
 		random_volume = random.randint(200, 2000)
-	bot.reply_to(message, f"{total_volume['nickname']} Ð’Ñ‹ ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð²Ñ‹Ð¿Ð¸Ð»Ð¸ Ñ‡Ð°Ð¹\n\nÐ’Ñ‹Ð¿Ð¸Ñ‚Ð¾: {random_volume} Ð¼Ð».\nÐ§Ð°Ð¹: {random_tea}\n\nÐ’ÑÐµÐ³Ð¾ Ð²Ñ‹Ð¿Ð¸Ñ‚Ð¾: {total_volume['total_volume'] + random_volume} Ð¼Ð».")
+	bot.reply_to(message, f"{total_volume['nickname']} Вы успешно выпили чай\n\nВыпито: {random_volume} мл.\nЧай: {random_tea}\n\nВсего выпито: {total_volume['total_volume'] + random_volume} мл.")
 
 	data[user_id] = {'total_volume': total_volume['total_volume'] + random_volume, 'last_drink_time': time.time(), 'nickname': user_nickname}
 	save_data(data)
@@ -231,13 +231,13 @@ def knock_cards_function(message):
 	inventory = user_data_coins.get('purchases', [])
 
 	default_wait = 21600
-	if "Ð‘Ð¸Ð½Ð¾ÐºÐ»ÑŒ Carl Zeiss Jena 40x105." in inventory:
+	if "Бинокль Carl Zeiss Jena 40x105." in inventory:
 		default_wait = min(default_wait, 12060)
-	if "Ð‘Ð¸Ð½Ð¾ÐºÐ»ÑŒ Fujinon 25x150 MT-SX" in inventory:
+	if "Бинокль Fujinon 25x150 MT-SX" in inventory:
 		default_wait = min(default_wait, 15300)
-	if "Ð‘Ð¸Ð½Ð¾ÐºÐ»ÑŒ Celestron SkyMaster 25x100" in inventory:
+	if "Бинокль Celestron SkyMaster 25x100" in inventory:
 		default_wait = min(default_wait, 18360)
-	if "Ð‘Ð¸Ð½Ð¾ÐºÐ»ÑŒ Canon 18x50 IS All Weather" in inventory:
+	if "Бинокль Canon 18x50 IS All Weather" in inventory:
 		default_wait = min(default_wait, 19440)
 
 	if time_since_last_usage < default_wait:
@@ -245,44 +245,44 @@ def knock_cards_function(message):
 		remaining_hours = int(remaining_time // 3600)
 		remaining_minutes = int((remaining_time % 3600) // 60)
 		remaining_seconds = int(remaining_time % 60)
-		bot.reply_to(message, f"Ð’Ð°Ð¼ Ð½ÑƒÐ¶Ð½Ð¾ Ð¿ÐµÑ€ÐµÐ´Ð¾Ñ…Ð½ÑƒÑ‚ÑŒ ðŸ˜´ {remaining_hours} Ñ‡Ð°ÑÐ¾Ð² {remaining_minutes} Ð¼Ð¸Ð½ÑƒÑ‚ {remaining_seconds} ÑÐµÐºÑƒÐ½Ð´ Ð¿ÐµÑ€ÐµÐ´ ÑÐ»ÐµÐ´ÑƒÑŽÑ‰ÐµÐ¼ Ð½Ð°Ð±Ð»ÑŽÐ´ÐµÐ½Ð¸ÐµÐ¼ Ð·Ð° Ð¿Ñ‚Ð¸Ñ‡ÐºÐ°Ð¼Ð¸!")
+		bot.reply_to(message, f"Вам нужно передохнуть 😴 {remaining_hours} часов {remaining_minutes} минут {remaining_seconds} секунд перед следующем наблюдением за птичками!")
 		return
 
 	random_number = random.randint(1, 95)
-	if 0 <= random_number <= 14 or ("Ð¥Ð»ÐµÐ±, ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸Ðµ: Ð¿Ð¾Ð²Ñ‹ÑˆÐµÐ½Ð¸Ðµ ÑˆÐ°Ð½ÑÐ¾Ð² Ð½Ð° Ð»ÐµÐ³ÐµÐ½Ð´Ð°Ñ€Ð½ÑƒÑŽ Ð¿Ñ‚Ð¸Ñ‡ÐºÑƒ Ð½Ð° Ð¾Ð´Ð¸Ð½ Ñ€Ð°Ð·." in inventory and 0 <= random_number <= 30):
-		eligible_birds = [bird for bird in birds if bird["rarity"] == "Ð›ÐµÐ³ÐµÐ½Ð´Ð°Ñ€Ð½Ð°Ñ"]
+	if 0 <= random_number <= 14 or ("Хлеб, Описание: повышение шансов на легендарную птичку на один раз." in inventory and 0 <= random_number <= 30):
+		eligible_birds = [bird for bird in birds if bird["rarity"] == "Легендарная"]
 	elif 15 <= random_number <= 29:
-		eligible_birds = [bird for bird in birds if bird["rarity"] == "ÐœÐ¸Ñ„Ð¸Ñ‡ÐµÑÐºÐ°Ñ"]
+		eligible_birds = [bird for bird in birds if bird["rarity"] == "Мифическая"]
 	elif 30 <= random_number <= 49:
-		eligible_birds = [bird for bird in birds if bird["rarity"] == "Ð¡Ð²ÐµÑ€Ñ…Ñ€ÐµÐ´ÐºÐ°Ñ"]
+		eligible_birds = [bird for bird in birds if bird["rarity"] == "Сверхредкая"]
 	elif 50 <= random_number <= 95:
-		eligible_birds = [bird for bird in birds if bird["rarity"] == "Ð ÐµÐ´ÐºÐ°Ñ"]
+		eligible_birds = [bird for bird in birds if bird["rarity"] == "Редкая"]
 
 	if eligible_birds:
 		chosen_bird = random.choice(eligible_birds)
 		photo_data = chosen_bird['photo']
 		if chosen_bird['name'] in user_data['birds']:
 			with open(photo_data, 'rb') as photo_file:
-				bot.send_photo(message.chat.id, photo_file, caption=f"Ð’Ð°Ð¼ Ð¿Ð¾Ð¿Ð°Ð»Ð°ÑÑŒ Ð¿Ð¾Ð²Ñ‚Ð¾Ñ€ÐºÐ° {chosen_bird['name']}! Ð‘ÑƒÐ´ÑƒÑ‚ Ð½Ð°Ñ‡Ð¸ÑÐ»ÐµÐ½Ñ‹ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð¾Ñ‡ÐºÐ¸.\nÐ ÐµÐ´ÐºÐ¾ÑÑ‚ÑŒ: {chosen_bird['rarity']}\n+{chosen_bird['points']} Ð¾Ñ‡ÐºÐ¾Ð².\nÐžÐ±Ð¸Ñ‚Ð°Ð½Ð¸Ðµ: {chosen_bird['place']}\n\nÐ’ÑÐµÐ³Ð¾ Ð¿Ð¾Ð¸Ð½Ñ‚Ð¾Ð²: {user_data['points'] + int(chosen_bird['points'])}")
+				bot.send_photo(message.chat.id, photo_file, caption=f"Вам попалась повторка {chosen_bird['name']}! Будут начислены только очки.\nРедкость: {chosen_bird['rarity']}\n+{chosen_bird['points']} очков.\nОбитание: {chosen_bird['place']}\n\nВсего поинтов: {user_data['points'] + int(chosen_bird['points'])}")
 			user_data['points'] += int(chosen_bird['points'])
 		else:
 			with open(photo_data, 'rb') as photo_file:
-				bot.send_photo(message.chat.id, photo_file, caption=f"Ð˜Ð· Ð²Ð°ÑˆÐ¸Ñ… Ð½Ð°Ð±Ð»ÑŽÐ´ÐµÐ½Ð¸Ð¹ Ð²Ñ‹ Ð¾Ñ‚ÐºÑ€Ñ‹Ð»Ð¸ Ð½Ð¾Ð²ÑƒÑŽ Ð¿Ñ‚Ð¸Ñ†Ñƒ: {chosen_bird['name']}\nÐ ÐµÐ´ÐºÐ¾ÑÑ‚ÑŒ: {chosen_bird['rarity']}\nÐžÑ‡ÐºÐ¸: {chosen_bird['points']}\nÐžÐ±Ð¸Ñ‚Ð°Ð½Ð¸Ðµ: {chosen_bird['place']}")
+				bot.send_photo(message.chat.id, photo_file, caption=f"Из ваших наблюдений вы открыли новую птицу: {chosen_bird['name']}\nРедкость: {chosen_bird['rarity']}\nОчки: {chosen_bird['points']}\nОбитание: {chosen_bird['place']}")
 			user_data['birds'].append(chosen_bird['name'])
 			user_data['points'] += int(chosen_bird['points'])
 		user_data['last_usage'] = time.time()
 		data[user_id] = user_data
 		save_data_2(data)
 
-		if "Ð¥Ð»ÐµÐ±, ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸Ðµ: Ð¿Ð¾Ð²Ñ‹ÑˆÐµÐ½Ð¸Ðµ ÑˆÐ°Ð½ÑÐ¾Ð² Ð½Ð° Ð»ÐµÐ³ÐµÐ½Ð´Ð°Ñ€Ð½ÑƒÑŽ Ð¿Ñ‚Ð¸Ñ‡ÐºÑƒ Ð½Ð° Ð¾Ð´Ð¸Ð½ Ñ€Ð°Ð·." in inventory:
-			inventory.remove("Ð¥Ð»ÐµÐ±, ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸Ðµ: Ð¿Ð¾Ð²Ñ‹ÑˆÐµÐ½Ð¸Ðµ ÑˆÐ°Ð½ÑÐ¾Ð² Ð½Ð° Ð»ÐµÐ³ÐµÐ½Ð´Ð°Ñ€Ð½ÑƒÑŽ Ð¿Ñ‚Ð¸Ñ‡ÐºÑƒ Ð½Ð° Ð¾Ð´Ð¸Ð½ Ñ€Ð°Ð·.")
+		if "Хлеб, Описание: повышение шансов на легендарную птичку на один раз." in inventory:
+			inventory.remove("Хлеб, Описание: повышение шансов на легендарную птичку на один раз.")
 			data_coins[user_id]['purchases'] = inventory
 		else:
 			pass
 
 		with open('user_coins.json', 'w') as file:
 			json.dump(data_coins, file, indent=4)
-			print("ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¾")
+			print("сохранено")
 
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('show_cards'))
@@ -291,7 +291,7 @@ def show_knock_cards(call):
 	user_nickname = call.from_user.first_name
 	unique_number = int(call.data.split('_')[-1])
 	if user_button.get(user_id) != unique_number:
-			bot.answer_callback_query(call.id, "ÐÐµ Ð²Ð°ÑˆÐ° ÐºÐ½Ð¾Ð¿ÐºÐ°.", show_alert=True)
+			bot.answer_callback_query(call.id, "Не ваша кнопка.", show_alert=True)
 			return
 	data = load_data_cards()
 	user_data = data.get(user_id, {'birds': [], 'last_usage': 0, 'points': 0, 'nickname': user_nickname})
@@ -304,17 +304,17 @@ def show_knock_cards(call):
 		for rarity in rarities:
 			keyboard.add(telebot.types.InlineKeyboardButton(text=rarity, callback_data=f'show_{rarity}'))
 		try:
-			bot.send_message(call.from_user.id, f"Ð£ Ð²Ð°Ñ ÑÐ¾Ð±Ñ€Ð°Ð½Ð¾ {collected_cards} Ð¸Ð· {total_cards} Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ñ‹Ñ…\nÐ’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ñ€ÐµÐ´ÐºÐ¾ÑÑ‚ÑŒ:", reply_markup=keyboard)
+			bot.send_message(call.from_user.id, f"У вас собрано {collected_cards} из {total_cards} возможных\nВыберите редкость:", reply_markup=keyboard)
 			chat_type = call.message.chat.type
 			if chat_type in ['group', 'supergroup']:
-					bot.send_message(call.message.chat.id, f"{call.from_user.first_name}, ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ¸ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ñ‹ Ð²Ð°Ð¼ Ð² Ð»Ð¸Ñ‡Ð½Ñ‹Ðµ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ñ!")
+					bot.send_message(call.message.chat.id, f"{call.from_user.first_name}, карточки отправлены вам в личные сообщения!")
 			else:
 					pass
 		except telebot.apihelper.ApiException as e:
-				logging.error(f"ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÑŒ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ: {str(e)}")
-				bot.send_message(call.message.chat.id, "ÐÐ°Ð¿Ð¸ÑˆÐ¸Ñ‚Ðµ Ð±Ð¾Ñ‚Ñƒ Ñ‡Ñ‚Ð¾-Ñ‚Ð¾ Ð² Ð»Ð¸Ñ‡Ð½Ñ‹Ðµ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ñ, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÑŒ Ð²Ð°Ð¼ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ¸!")
+				logging.error(f"Не удалось отправить сообщение: {str(e)}")
+				bot.send_message(call.message.chat.id, "Напишите боту что-то в личные сообщения, чтобы отправить вам карточки!")
 	else:
-		bot.send_message(call.message.chat.id, "Ð’Ñ‹ Ð¿Ð¾ÐºÐ° Ñ‡Ñ‚Ð¾ Ð½Ðµ Ð½Ð°Ð±Ð»ÑŽÐ´Ð°Ð»Ð¸ Ð·Ð° Ð¿Ñ‚Ð¸Ñ‡ÐºÐ°Ð¼Ð¸.")
+		bot.send_message(call.message.chat.id, "Вы пока что не наблюдали за птичками.")
 
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('show_'))
@@ -329,15 +329,15 @@ def show_cards(call):
 	if rarity_cards:
 		for bird in rarity_cards:
 			photo_data = bird['photo']
-			caption = f"{bird['name']}\nÐ ÐµÐ´ÐºÐ¾ÑÑ‚ÑŒ: {bird['rarity']}"
+			caption = f"{bird['name']}\nРедкость: {bird['rarity']}"
 			if 'points' in bird:
-				caption += f"\nÐžÑ‡ÐºÐ¸: {bird['points']}"
-			caption += f"\nÐžÐ±Ð¸Ñ‚Ð°Ð½Ð¸Ðµ: {bird['place']}"
+				caption += f"\nОчки: {bird['points']}"
+			caption += f"\nОбитание: {bird['place']}"
 			with open(photo_data, 'rb') as photo_file:
 				chat_type = call.message.chat.type
 				bot.send_photo(call.message.chat.id, photo_file, caption=caption)
 	else:
-		bot.send_message(call.message.chat.id, f"Ð£ Ð²Ð°Ñ Ð½ÐµÑ‚ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐµÐº Ñ€ÐµÐ´ÐºÐ¾ÑÑ‚Ð¸ {rarity}")
+		bot.send_message(call.message.chat.id, f"У вас нет карточек редкости {rarity}")
 
 
 def handle_stocoin(message):
@@ -356,7 +356,7 @@ def handle_stocoin(message):
 		if current_time - last_request_time < 1500:  # 5 minutes cooldown
 			remaining_time = 1500 - (current_time - last_request_time)
 			minutes, seconds = divmod(remaining_time, 60)
-			bot.reply_to(message, f"Ð’Ñ‹ ÑƒÐ¶Ðµ Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ð»Ð¸ ÐºÑ€Ð¾Ð½Ñ‹. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ Ñ‡ÐµÑ€ÐµÐ· {int(minutes)} Ð¼Ð¸Ð½ÑƒÑ‚ {int(seconds)} ÑÐµÐºÑƒÐ½Ð´.")
+			bot.reply_to(message, f"Вы уже получили кроны. Попробуйте через {int(minutes)} минут {int(seconds)} секунд.")
 			return
 
 		premium_users = load_premium_users()
@@ -377,9 +377,9 @@ def handle_stocoin(message):
 		with open("user_coins.json", 'w') as file:
 			json.dump(data, file, indent=4)
 
-		bot.reply_to(message, f"Ð’Ñ‹ ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð·Ð°Ñ€Ð°Ð±Ð¾Ñ‚Ð°Ð»Ð¸ {coins} Ð·Ð¾Ð»Ð¾Ñ‚Ñ‹Ñ… ÐºÑ€Ð¾Ð½.")
+		bot.reply_to(message, f"Вы успешно заработали {coins} золотых крон.")
 	except Exception as e:
-		bot.send_message(message.chat.id, f"Ð’Ñ€ÐµÐ¼ÐµÐ½Ð½Ð°Ñ Ð¾ÑˆÐ¸Ð±ÐºÐ° Ð² Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐµ, Ð¿Ð¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚Ðµ Ð¿Ð¾Ð·Ð¶Ðµ!")
+		bot.send_message(message.chat.id, f"Временная ошибка в обработке, повторите позже!")
 		print(e)
 
 
@@ -397,7 +397,7 @@ def handle_shop(message):
 			with open("user_coins.json", 'r') as file:
 				data = json.load(file)
 		except FileNotFoundError:
-			bot.send_message(message.chat.id, "ÐžÑˆÐ¸Ð±ÐºÐ°: Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÐµÐ¹ Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½Ñ‹.")
+			bot.send_message(message.chat.id, "Ошибка: данные пользователей не найдены.")
 			return
 
 		user_data = data.get(user_id, {})
@@ -408,18 +408,18 @@ def handle_shop(message):
 		minutes, seconds = divmod(remaining_time, 60)
 
 		if remaining_time > 0:
-			time_message = f" Ð”Ð¾ ÑÐ»ÐµÐ´ÑƒÑŽÑ‰ÐµÐ³Ð¾ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ñ ÐºÐ¾Ð¹Ð½Ð¾Ð² Ð¾ÑÑ‚Ð°Ð»Ð¾ÑÑŒ {int(minutes)} Ð¼Ð¸Ð½. {int(seconds)} ÑÐµÐº."
+			time_message = f" До следующего получения койнов осталось {int(minutes)} мин. {int(seconds)} сек."
 		else:
 			time_message = ""
 
-		shop_message = f"Ð’Ð°Ñˆ Ñ‚ÐµÐºÑƒÑ‰Ð¸Ð¹ Ð±Ð°Ð»Ð°Ð½Ñ: {coins} ÐºÑ€Ð¾Ð½Ñ‹." + time_message + "\nÐ’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ñ‚Ð¾Ð²Ð°Ñ€:"
+		shop_message = f"Ваш текущий баланс: {coins} кроны." + time_message + "\nВыберите товар:"
 		markup = types.InlineKeyboardMarkup(row_width=8)
 		for product_id, product_info in products.items():
 			button = types.InlineKeyboardButton(text=product_info["name"], callback_data=f"buy_{product_id}_{unique_number}")
 			markup.add(button)
 		bot.send_message(message.chat.id, shop_message, reply_markup=markup)
 	except Exception as e:
-		bot.send_message(message.chat.id, f"ÐŸÑ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° Ð¾ÑˆÐ¸Ð±ÐºÐ° {e} (Ð½Ð°Ð¿Ð¸ÑˆÐ¸Ñ‚Ðµ @AleksFolt)")
+		bot.send_message(message.chat.id, f"Произошла ошибка {e} (напишите @AleksFolt)")
 
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('buy_'))
@@ -428,16 +428,16 @@ def handle_buy_query(call):
 	user_id = str(call.from_user.id)
 	
 	if user_button.get(user_id) != int(unique_number):
-		bot.answer_callback_query(call.id, "ÐÐµ Ð²Ð°ÑˆÐ° ÐºÐ½Ð¾Ð¿ÐºÐ°.", show_alert=True)
+		bot.answer_callback_query(call.id, "Не ваша кнопка.", show_alert=True)
 		return
 
 	product = products[product_id]
 	markup = types.InlineKeyboardMarkup()
-	buy_button = types.InlineKeyboardButton(text="ÐšÑƒÐ¿Ð¸Ñ‚ÑŒ", callback_data=f"confirm_{product_id}_{unique_number}")
+	buy_button = types.InlineKeyboardButton(text="Купить", callback_data=f"confirm_{product_id}_{unique_number}")
 	markup.add(buy_button)
 	
 	with open(product["image"], "rb") as photo:
-		bot.send_photo(call.message.chat.id, photo, caption=f"{product['name']} - Ð¦ÐµÐ½Ð°: {product['price']} ÐºÑ€Ð¾Ð½.", reply_markup=markup)
+		bot.send_photo(call.message.chat.id, photo, caption=f"{product['name']} - Цена: {product['price']} крон.", reply_markup=markup)
 
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('confirm_'))
@@ -447,7 +447,7 @@ def confirm_purchase(call):
 	unique_number = int(call.data.split('_')[2])
 	product = products[product_id]
 	if user_button.get(user_id) != unique_number:
-		bot.answer_callback_query(call.id, "ÐÐµ Ð²Ð°ÑˆÐ° ÐºÐ½Ð¾Ð¿ÐºÐ°.", show_alert=True)
+		bot.answer_callback_query(call.id, "Не ваша кнопка.", show_alert=True)
 		return
 
 	with open("user_coins.json", 'r') as file:
@@ -455,15 +455,15 @@ def confirm_purchase(call):
 
 	if data[user_id]["coins"] >= product["price"]:
 		if product["name"] in data[user_id]["purchases"]:
-			bot.answer_callback_query(call.id, f"Ð—Ð°Ñ‡ÐµÐ¼ Ñ‚ÐµÐ±Ðµ Ð´Ð²Ð° Ñ‚Ð°ÐºÐ¸Ñ…? ðŸ¤¨")
+			bot.answer_callback_query(call.id, f"Зачем тебе два таких? 🤨")
 			return
 		data[user_id]["coins"] -= product["price"]
 		data[user_id]["purchases"].append(product["name"])
 		with open("user_coins.json", 'w') as file:
 			json.dump(data, file, indent=4)
-		bot.answer_callback_query(call.id, f"ÐŸÐ¾ÐºÑƒÐ¿ÐºÐ° ÑƒÑÐ¿ÐµÑˆÐ½Ð°! Ð’Ñ‹ Ð¿Ñ€Ð¸Ð¾Ð±Ñ€ÐµÐ»Ð¸ {product['name']}.")
+		bot.answer_callback_query(call.id, f"Покупка успешна! Вы приобрели {product['name']}.")
 	else:
-		bot.answer_callback_query(call.id, "ÐÐµÐ´Ð¾ÑÑ‚Ð°Ñ‚Ð¾Ñ‡Ð½Ð¾ Ð·Ð¾Ð»Ð¾Ñ‚Ñ‹Ñ… ÐºÑ€Ð¾Ð½ Ð´Ð»Ñ Ð¿Ð¾ÐºÑƒÐ¿ÐºÐ¸. Ð—Ð°Ñ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°Ð¹ Ð±Ð¾Ð»ÑŒÑˆÐµ!")
+		bot.answer_callback_query(call.id, "Недостаточно золотых крон для покупки. Зарабатывай больше!")
 
 
 def handle_goods(message):
@@ -472,22 +472,22 @@ def handle_goods(message):
 		with open("user_coins.json", 'r') as file:
 			data = json.load(file)
 		purchases = data.get(user_id, {}).get("purchases", [])
-		response = "Ð’Ð°ÑˆÐ¸ Ñ‚Ð¾Ð²Ð°Ñ€Ñ‹:\n" + "\n".join(purchases) if purchases else "Ð’Ñ‹ ÐµÑ‰Ðµ Ð½Ð¸Ñ‡ÐµÐ³Ð¾ Ð½Ðµ ÐºÑƒÐ¿Ð¸Ð»Ð¸."
+		response = "Ваши товары:\n" + "\n".join(purchases) if purchases else "Вы еще ничего не купили."
 		bot.send_message(message.chat.id, response)
 	except Exception as e:
-		bot.send_message(message.chat.id, f"ÐŸÑ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° Ð¾ÑˆÐ¸Ð±ÐºÐ° {e} (Ð½Ð°Ð¿Ð¸ÑˆÐ¸Ñ‚Ðµ @AleksFolt)")
+		bot.send_message(message.chat.id, f"Произошла ошибка {e} (напишите @AleksFolt)")
 
 
 def cards_top(message):
 	try:
 		inline_markup = InlineKeyboardMarkup()
-		button_1 = InlineKeyboardButton(text="Ð¢Ð¾Ð¿ Ð¿Ð¾ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ°Ð¼", callback_data="top_cards_cards")
-		button_2 = InlineKeyboardButton(text="Ð¢Ð¾Ð¿ Ð¿Ð¾ Ð¾Ñ‡ÐºÐ°Ð¼", callback_data="top_cards_point")
+		button_1 = InlineKeyboardButton(text="Топ по карточкам", callback_data="top_cards_cards")
+		button_2 = InlineKeyboardButton(text="Топ по очкам", callback_data="top_cards_point")
 		inline_markup.add(button_1, button_2)
-		bot.send_message(message.chat.id, "Ð¢Ð¾Ð¿ 10 Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÐµÐ¹ Ð¿Ð¾ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ°Ð¼. Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ ÐºÐ½Ð¾Ð¿ÐºÑƒ:", reply_markup=inline_markup)
+		bot.send_message(message.chat.id, "Топ 10 пользователей по карточкам. Выберите кнопку:", reply_markup=inline_markup)
 	except Exception as e:
 		print(f"Error: {e}")
-		bot.send_message(message.chat.id, "Ð’Ñ€ÐµÐ¼ÐµÐ½Ð½Ð°Ñ Ð¾ÑˆÐ¸Ð±ÐºÐ° Ð² Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐµ, Ð¿Ð¾Ð²Ñ‚Ð¾Ñ€Ð¸ Ð¿Ð¾Ð·Ð¶Ðµ.")
+		bot.send_message(message.chat.id, "Временная ошибка в обработке, повтори позже.")
 
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('top_cards_'))
@@ -497,31 +497,31 @@ def cards_top_callback(call):
     user_id = str(call.message.from_user.id)
     user_data = data.get(user_id, {'points': 0, 'birds': []})
     if choice == "cards":
-        sorted_data = sored(data.items(), key=lambda x: len(x[1].get('birds', [])), reverse=True)
+        sorted_data = sorted(data.items(), key=lambda x: len(x[1].get('birds', [])), reverse=True)
         top_10 = sorted_data[:10]
 
-        message_text = "Ð¢Ð¾Ð¿-10 Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÐµÐ¹ Ð¿Ð¾ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ñƒ ÑÐ¾Ð±Ñ€Ð°Ð½Ð½Ñ‹Ñ… ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐµÐº:\n\n"
+        message_text = "Топ-10 пользователей по количеству собранных карточек:\n\n"
         for i, (user_id, user_data) in enumerate(top_10, 1):
             nickname = user_data.get('nickname', 'Unknown')
             num_cards = len(user_data.get('birds', []))
-            message_text += f"{i}. {nickname}: {num_cards} ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐµÐº\n"
+            message_text += f"{i}. {nickname}: {num_cards} карточек\n"
 
         bot.send_message(call.message.chat.id, message_text)
     elif choice == "point":
         sorted_data_points = sorted(data.items(), key=lambda x: x[1].get('points', 0), reverse=True)
         top_10 = sorted_data_points[:10]
 
-        message_text = "Ð¢Ð¾Ð¿-10 Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÐµÐ¹ Ð¿Ð¾ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ñƒ Ð½Ð°Ð±Ñ€Ð°Ð½Ð½Ñ‹Ñ… Ð¾Ñ‡ÐºÐ¾Ð²:\n\n"
+        message_text = "Топ-10 пользователей по количеству набранных очков:\n\n"
         for j, (user_id, user_data) in enumerate(top_10, 1):
             nickname_2 = user_data.get('nickname', 'Unknown')
             points = user_data.get('points', 0)
-            message_text += f"{j}. {nickname_2}: {points} Ð¾Ñ‡ÐºÐ¾Ð²\n"
+            message_text += f"{j}. {nickname_2}: {points} очков\n"
 
         bot.send_message(call.message.chat.id, message_text)
 
 
 def handle_profile(message, background_image_path="background_image.jpg"):
-	waiting = bot.send_message(message.chat.id, "ÐžÑ‚ÐºÑ€Ñ‹Ð²Ð°ÑŽ Ð¿Ñ€Ð¾Ñ„Ð¸Ð»ÑŒ...")
+	waiting = bot.send_message(message.chat.id, "Открываю профиль...")
 	user_id = message.from_user.id
 	str_user_id = str(user_id)
 	first_name = message.from_user.first_name
@@ -545,7 +545,7 @@ def handle_profile(message, background_image_path="background_image.jpg"):
 		with open("user_coins.json", 'r') as file:
 			data_coin = json.load(file)
 	except FileNotFoundError:
-		bot.send_message(message.chat.id, "ÐžÑˆÐ¸Ð±ÐºÐ°: Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÐµÐ¹ Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½Ñ‹.")
+		bot.send_message(message.chat.id, "Ошибка: данные пользователей не найдены.")
 		return
 
 	user_data_coin = data_coin.get(str_user_id, {})
@@ -558,12 +558,12 @@ def handle_profile(message, background_image_path="background_image.jpg"):
 			days = remaining_time.days
 			hours = remaining_time.seconds // 3600
 			minutes = (remaining_time.seconds % 3600) // 60
-			premium_status = f"Ð°ÐºÑ‚Ð¸Ð²ÐµÐ½, Ð·Ð°ÐºÐ¾Ð½Ñ‡Ð¸Ñ‚ÑÑ Ñ‡ÐµÑ€ÐµÐ· {days} Ð´Ð½ÐµÐ¹ {hours} Ñ‡Ð°ÑÐ¾Ð² {minutes} Ð¼Ð¸Ð½ÑƒÑ‚"
+			premium_status = f"активен, закончится через {days} дней {hours} часов {minutes} минут"
 		else:
-			premium_status = "Ð¸ÑÑ‚ÐµÐº"
+			premium_status = "истек"
 	else:
-		premium_status = "Ð½Ðµ Ð°ÐºÑ‚Ð¸Ð²ÐµÐ½"
-	caption = f"ðŸ¡ Ð›Ð¸Ñ‡Ð½Ñ‹Ð¹ Ð¿Ñ€Ð¾Ñ„Ð¸Ð»ÑŒ {first_name} {last_name}\nðŸƒ Ð¡Ð¾Ð±Ñ€Ð°Ð½Ð¾ {collected_cards} ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐµÐº Ð¸Ð· {total_cards} Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ñ‹Ñ….\nðŸª™ Ð’Ð°Ñˆ Ð±Ð°Ð»Ð°Ð½Ñ ÐºÑ€Ð¾Ð½: {coins} ÐºÑ€Ð¾Ð½.\nðŸ† Ð‘Ð°Ð»Ð°Ð½Ñ Ð¿Ð¾Ð¸Ð½Ñ‚Ð¾Ð²: {user_data['points']}\nðŸ’Ž ÐŸÑ€ÐµÐ¼Ð¸ÑƒÐ¼ ÑÑ‚Ð°Ñ‚ÑƒÑ: {premium_status}"
+		premium_status = "не активен"
+	caption = f"🏡 Личный профиль {first_name} {last_name}\n🃏 Собрано {collected_cards} карточек из {total_cards} возможных.\n🪙 Ваш баланс крон: {coins} крон.\n🏆 Баланс поинтов: {user_data['points']}\n💎 Премиум статус: {premium_status}"
 
 	user_profile_photos = bot.get_user_profile_photos(user_id, limit=1)
 	if user_profile_photos.photos:
@@ -598,9 +598,9 @@ def handle_profile(message, background_image_path="background_image.jpg"):
 	unique_number = random.randint(1000, 99999999)
 	user_button[str_user_id] = unique_number
 	keyboard = telebot.types.InlineKeyboardMarkup(row_width=2)
-	button_1 = telebot.types.InlineKeyboardButton(text="ÐœÐ¾Ð¸ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ¸", callback_data=f'show_cards_{unique_number}')
-	button_2 = telebot.types.InlineKeyboardButton(text="ÐšÑƒÐ¿Ð¸Ñ‚ÑŒ ÐºÑ€ÑƒÑ‚ÐºÑƒ", callback_data=f'crutka_cards_{unique_number}')
-	button_3 = telebot.types.InlineKeyboardButton(text="ÐŸÑ€ÐµÐ¼Ð¸ÑƒÐ¼", callback_data=f'birdy_prem_{unique_number}')
+	button_1 = telebot.types.InlineKeyboardButton(text="Мои карточки", callback_data=f'show_cards_{unique_number}')
+	button_2 = telebot.types.InlineKeyboardButton(text="Купить крутку", callback_data=f'crutka_cards_{unique_number}')
+	button_3 = telebot.types.InlineKeyboardButton(text="Премиум", callback_data=f'birdy_prem_{unique_number}')
 	keyboard.add(button_1, button_2, button_3)
 	bot.delete_message(message.chat.id, waiting.message_id)
 	bot.send_photo(message.chat.id, photo=final_image_stream, caption=caption, reply_markup=keyboard)
@@ -611,9 +611,9 @@ def crutki(call):
 	unique_number = int(call.data.split('_')[-1])
 	user_id = str(call.from_user.id)
 	if user_button.get(user_id) != unique_number:
-		bot.answer_callback_query(call.id, "ÐÐµ Ð²Ð°ÑˆÐ° ÐºÐ½Ð¾Ð¿ÐºÐ°.", show_alert=True)
+		bot.answer_callback_query(call.id, "Не ваша кнопка.", show_alert=True)
 		return
-	bot.send_message(call.message.chat.id, "ðŸ’Ž Birdy Premium\n\nÐŸÑ€ÐµÐ¸Ð¼ÑƒÑ‰ÐµÑÑ‚Ð²Ð°:\nÐšÑ€Ð¾Ð½Ñ‹ Ð²Ñ‹Ð´Ð°ÑŽÑ‚ÑÑ Ð¾Ñ‚ 1 Ð´Ð¾ 20 Ð²Ð¼ÐµÑÑ‚Ð¾ 1 Ð´Ð¾ 10.\nÐ§Ð°Ð¹ Ð²Ñ‹Ð´Ð°ÐµÑ‚ÑÑ Ð¾Ñ‚ 500 Ð´Ð¾ 2000 Ð²Ð¼ÐµÑÑ‚Ð¾ 200 Ð´Ð¾ 2000.\nÐ’ Ñ‚Ð¾Ð¿Ðµ Ñ‡Ð°Ñ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÑ‚ÑÑ Ð°Ð»Ð¼Ð°Ð·.\nÐ’ Ð±ÑƒÐ´ÑƒÑ‰ÐµÐ¼ Ð±ÑƒÐ´ÐµÑ‚ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¾ Ð±Ð¾Ð»ÑŒÑˆÐµ Ð²ÑÐµÐ³Ð¾.\n\nÐŸÐ¾ÐºÑƒÐ¿ÐºÐ°:\nÐšÐ¾Ð¼Ð°Ð½Ð´Ð°: /prem.\nÐžÐ¿Ð»Ð°Ñ‚Ð° USDT, @CryptoBot")
+	bot.send_message(call.message.chat.id, "💎 Birdy Premium\n\nПреимущества:\nКроны выдаются от 1 до 20 вместо 1 до 10.\nЧай выдается от 500 до 2000 вместо 200 до 2000.\nВ топе чая отображается алмаз.\nВ будущем будет добавлено больше всего.\n\nПокупка:\nКоманда: /prem.\nОплата USDT, @CryptoBot")
 
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith(f'crutka_cards'))
@@ -621,15 +621,15 @@ def crutki(call):
 	unique_number = int(call.data.split('_')[-1])
 	user_id = str(call.from_user.id)
 	if user_button.get(user_id) != unique_number:
-		bot.answer_callback_query(call.id, "ÐÐµ Ð²Ð°ÑˆÐ° ÐºÐ½Ð¾Ð¿ÐºÐ°.", show_alert=True)
+		bot.answer_callback_query(call.id, "Не ваша кнопка.", show_alert=True)
 		return
 	data = load_data_cards()
 	user_nickname = call.from_user.first_name
 	user_data = data.get(user_id, {'birds': [], 'last_usage': 0, 'points': 0, 'nickname': user_nickname})
 	keyboard = telebot.types.InlineKeyboardMarkup(row_width=2)
-	button_1 = telebot.types.InlineKeyboardButton(text="ÐšÑƒÐ¿Ð¸Ñ‚ÑŒ", callback_data=f'buying_crutka_{unique_number}')
+	button_1 = telebot.types.InlineKeyboardButton(text="Купить", callback_data=f'buying_crutka_{unique_number}')
 	keyboard.add(button_1)
-	bot.send_message(call.message.chat.id, f"ÐšÑƒÐ¿Ð¸Ñ‚ÑŒ ÐºÑ€ÑƒÑ‚ÐºÑƒ. Ð¦ÐµÐ½Ð°: 35000 Ð¿Ð¾Ð¸Ð½Ñ‚Ð¾Ð²:\nÐ‘Ð°Ð»Ð°Ð½Ñ Ð¿Ð¾Ð¸Ð½Ñ‚Ð¾Ð²: {user_data['points']}", reply_markup=keyboard)
+	bot.send_message(call.message.chat.id, f"Купить крутку. Цена: 35000 поинтов:\nБаланс поинтов: {user_data['points']}", reply_markup=keyboard)
 	
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('buying_crutka'))
@@ -637,13 +637,13 @@ def buy_crutka(call):
 	user_id = str(call.from_user.id)
 	unique_number = int(call.data.split('_')[-1])
 	if user_button.get(user_id) != unique_number:
-		bot.answer_callback_query(call.id, "ÐÐµ Ð²Ð°ÑˆÐ° ÐºÐ½Ð¾Ð¿ÐºÐ°.", show_alert=True)
+		bot.answer_callback_query(call.id, "Не ваша кнопка.", show_alert=True)
 		return
 	data = load_data_cards()
 	user_nickname = call.from_user.first_name
 	user_data = data.get(user_id, {'birds': [], 'last_usage': 0, 'points': 0, 'nickname': user_nickname})
 	if user_data['points'] >= 35000:
-		eligible_birds = [bird for bird in birds if bird["rarity"] == "ÐšÑ€ÑƒÑ‚ÐºÐ°"]
+		eligible_birds = [bird for bird in birds if bird["rarity"] == "Крутка"]
 		chosen_bird = None
 		attempt_count = 0
 		while attempt_count < 100:
@@ -659,11 +659,11 @@ def buy_crutka(call):
 			save_data_2(data)
 			photo_data = chosen_bird['photo']
 			with open(photo_data, 'rb') as photo_file:
-				bot.send_photo(call.message.chat.id, photo_file, caption=f"{user_nickname} Ð’Ð°Ð¼ Ð²Ñ‹Ð¿Ð°Ð»Ð° {chosen_bird['name']}!")
+				bot.send_photo(call.message.chat.id, photo_file, caption=f"{user_nickname} Вам выпала {chosen_bird['name']}!")
 		else:
-			bot.send_message(call.message.chat.id, f"{user_nickname} Ð’Ñ‹ ÑƒÐ¶Ðµ ÑÐ¾Ð±Ñ€Ð°Ð»Ð¸ Ð²ÑÐµ ÐºÑ€ÑƒÑ‚ÐºÐ¸.")
+			bot.send_message(call.message.chat.id, f"{user_nickname} Вы уже собрали все крутки.")
 	else:
-		bot.send_message(call.message.chat.id, f"{user_nickname} ÐÐµÐ´Ð¾ÑÑ‚Ð°Ñ‚Ð¾Ñ‡Ð½Ð¾ Ð¾Ñ‡ÐºÐ¾Ð² Ð´Ð»Ñ Ð¿Ð¾ÐºÑƒÐ¿ÐºÐ¸!")
+		bot.send_message(call.message.chat.id, f"{user_nickname} Недостаточно очков для покупки!")
 
 
 
@@ -672,25 +672,25 @@ async def create_and_send_invoice(sender_id, is_group=False, message=None):
 		invoice = await crypto.create_invoice(asset='USDT', amount=0.5)
 		if not invoice:
 			if is_group:
-				bot.send_message(message.chat.id, "ÐžÑˆÐ¸Ð±ÐºÐ° Ð¿Ñ€Ð¸ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ð¸ Ð¸Ð½Ð²Ð¾Ð¹ÑÐ°. ÐŸÐ¾Ð¶Ð°Ð»ÑƒÐ¹ÑÑ‚Ð°, Ð½Ð°Ð¿Ð¸ÑˆÐ¸Ñ‚Ðµ Ñ‡Ñ‚Ð¾-Ñ‚Ð¾ Ð±Ð¾Ñ‚Ñƒ Ð² Ð»Ð¸Ñ‡ÐºÑƒ.")
+				bot.send_message(message.chat.id, "Ошибка при создании инвойса. Пожалуйста, напишите что-то боту в личку.")
 			else:
-				bot.send_message(sender_id, "ÐžÑˆÐ¸Ð±ÐºÐ° Ð¿Ñ€Ð¸ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ð¸ Ð¸Ð½Ð²Ð¾Ð¹ÑÐ°. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ Ð¿Ð¾Ð·Ð¶Ðµ.")
+				bot.send_message(sender_id, "Ошибка при создании инвойса. Попробуйте позже.")
 			return None
 
 		markup = types.InlineKeyboardMarkup()
-		url_requisites = types.InlineKeyboardButton(text="ÐžÐ¿Ð»Ð°Ñ‚Ð¸Ñ‚ÑŒ", url=invoice.bot_invoice_url)
+		url_requisites = types.InlineKeyboardButton(text="Оплатить", url=invoice.bot_invoice_url)
 		markup.add(url_requisites)
 		if is_group:
-			bot.send_message(message.chat.id, "Ð ÐµÐºÐ²Ð¸Ð·Ð¸Ñ‚Ñ‹ Ð´Ð»Ñ Ð¾Ð¿Ð»Ð°Ñ‚Ñ‹ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ñ‹ Ð² Ð»Ð¸Ñ‡Ð½Ñ‹Ðµ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ñ.")
-			bot.send_message(sender_id, f"ÐŸÑ€ÐµÐ¼Ð¸ÑƒÐ¼ Ð°ÐºÑ‚Ð¸Ð²Ð¸Ñ€ÑƒÐµÑ‚ÑÑ Ñ‡ÐµÑ€ÐµÐ· 100 ÑÐµÐºÑƒÐ½Ð´ Ð² ÑÐ»ÑƒÑ‡Ð°Ðµ ÑƒÑÐ¿ÐµÑˆÐ½Ð¾Ð¹ Ð¾Ð¿Ð»Ð°Ñ‚Ñ‹. Ð•ÑÐ»Ð¸ Ð²Ñ‹ Ð¾Ð¿Ð»Ð°Ñ‚Ð¸Ñ‚Ðµ Ñ‡ÐµÐº Ð¿Ð¾ÑÐ»Ðµ Ð¸ÑÑ‚ÐµÑ‡ÐµÐ½Ð¸Ñ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸ Ð²Ñ‹ Ð¿Ð¾Ñ‚ÐµÑ€ÑÐµÑ‚Ðµ Ð´ÐµÐ½ÑŒÐ³Ð¸! Ð ÐµÐºÐ²Ð¸Ð·Ð¸Ñ‚Ñ‹: {invoice.bot_invoice_url}", reply_markup=markup)
+			bot.send_message(message.chat.id, "Реквизиты для оплаты отправлены в личные сообщения.")
+			bot.send_message(sender_id, f"Премиум активируется через 100 секунд в случае успешной оплаты. Если вы оплатите чек после истечения времени вы потеряете деньги! Реквизиты: {invoice.bot_invoice_url}", reply_markup=markup)
 		else:
-			bot.send_message(sender_id, f"ÐŸÑ€ÐµÐ¼Ð¸ÑƒÐ¼ Ð°ÐºÑ‚Ð¸Ð²Ð¸Ñ€ÑƒÐµÑ‚ÑÑ Ñ‡ÐµÑ€ÐµÐ· 100 ÑÐµÐºÑƒÐ½Ð´ Ð² ÑÐ»ÑƒÑ‡Ð°Ðµ ÑƒÑÐ¿ÐµÑˆÐ½Ð¾Ð¹ Ð¾Ð¿Ð»Ð°Ñ‚Ñ‹. Ð•ÑÐ»Ð¸ Ð²Ñ‹ Ð¾Ð¿Ð»Ð°Ñ‚Ð¸Ñ‚Ðµ Ñ‡ÐµÐº Ð¿Ð¾ÑÐ»Ðµ Ð¸ÑÑ‚ÐµÑ‡ÐµÐ½Ð¸Ñ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸ Ð²Ñ‹ Ð¿Ð¾Ñ‚ÐµÑ€ÑÐµÑ‚Ðµ Ð´ÐµÐ½ÑŒÐ³Ð¸! Ð ÐµÐºÐ²Ð¸Ð·Ð¸Ñ‚Ñ‹: {invoice.bot_invoice_url}", reply_markup=markup)
+			bot.send_message(sender_id, f"Премиум активируется через 100 секунд в случае успешной оплаты. Если вы оплатите чек после истечения времени вы потеряете деньги! Реквизиты: {invoice.bot_invoice_url}", reply_markup=markup)
 		return invoice 
 	except Exception as e:
 		if is_group:
-			bot.send_message(message.chat.id, "ÐŸÑ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° Ð¾ÑˆÐ¸Ð±ÐºÐ° Ð¿Ñ€Ð¸ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ð¸ Ð¸Ð½Ð²Ð¾Ð¹ÑÐ°. ÐŸÐ¾Ð¶Ð°Ð»ÑƒÐ¹ÑÑ‚Ð°, Ð½Ð°Ð¿Ð¸ÑˆÐ¸Ñ‚Ðµ Ñ‡Ñ‚Ð¾-Ñ‚Ð¾ Ð±Ð¾Ñ‚Ñƒ Ð² Ð»Ð¸Ñ‡ÐºÑƒ.")
+			bot.send_message(message.chat.id, "Произошла ошибка при создании инвойса. Пожалуйста, напишите что-то боту в личку.")
 		else:
-			bot.send_message(sender_id, f"ÐžÑˆÐ¸Ð±ÐºÐ° Ð¿Ñ€Ð¸ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ð¸ Ð¸Ð½Ð²Ð¾Ð¹ÑÐ°: {e}")
+			bot.send_message(sender_id, f"Ошибка при создании инвойса: {e}")
 		return None
 
 def check_payment(sender_id, invoice_url):
@@ -704,16 +704,16 @@ def check_payment(sender_id, invoice_url):
 			new_expire_time = (datetime.now() + timedelta(days=30)).isoformat()
 		premium_users[str(sender_id)] = new_expire_time
 		save_premium_users(premium_users)
-		bot.send_message(sender_id, "ðŸŒŸ Ð¡Ð¿Ð°ÑÐ¸Ð±Ð¾ Ð·Ð° Ð¿Ð¾ÐºÑƒÐ¿ÐºÑƒ ÐŸÑ€ÐµÐ¼Ð¸ÑƒÐ¼Ð°! ÐÐ°ÑÐ»Ð°Ð¶Ð´Ð°Ð¹Ñ‚ÐµÑÑŒ ÑÐºÑÐºÐ»ÑŽÐ·Ð¸Ð²Ð½Ñ‹Ð¼Ð¸ Ð¿Ñ€ÐµÐ¸Ð¼ÑƒÑ‰ÐµÑÑ‚Ð²Ð°Ð¼Ð¸.")
+		bot.send_message(sender_id, "🌟 Спасибо за покупку Премиума! Наслаждайтесь эксклюзивными преимуществами.")
 	else:
-		bot.send_message(sender_id, "ÐžÐ¿Ð»Ð°Ñ‚Ð° Ð½Ðµ Ð¿Ñ€Ð¾ÑˆÐ»Ð°! ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÐµÑ‰Ðµ Ñ€Ð°Ð·.")
+		bot.send_message(sender_id, "Оплата не прошла! Попробуйте еще раз.")
 
 async def get_invoice_status(invoice):
 	try:
 		invoice = await crypto.get_invoices(invoice_ids=invoice.invoice_id)
 		return invoice.status
 	except Exception as e:
-		print(f"ÐžÑˆÐ¸Ð±ÐºÐ° Ð¿Ñ€Ð¸ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ð¸ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¸Ð½Ð²Ð¾Ð¹ÑÐ°: {e}")
+		print(f"Ошибка при получении данных инвойса: {e}")
 		return None
 
 
@@ -725,11 +725,11 @@ def buy_premium(message):
 			t = threading.Timer(100, check_payment, args=(sender_id, invoice))
 			t.start()
 		else:
-			bot.send_message(sender_id, "ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ ÑÐ¾Ð·Ð´Ð°Ñ‚ÑŒ Ð¸Ð½Ð²Ð¾Ð¹Ñ.")
+			bot.send_message(sender_id, "Не удалось создать инвойс.")
 	else: 
 		invoice = run_async(create_and_send_invoice(sender_id, is_group=True, message=message))
 		if not invoice:
-			bot.send_message(message.chat.id, "ÐŸÑ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° Ð¾ÑˆÐ¸Ð±ÐºÐ° Ð¿Ñ€Ð¸ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ð¸ Ð¸Ð½Ð²Ð¾Ð¹ÑÐ°. ÐŸÐ¾Ð¶Ð°Ð»ÑƒÐ¹ÑÑ‚Ð°, Ð½Ð°Ð¿Ð¸ÑˆÐ¸Ñ‚Ðµ Ñ‡Ñ‚Ð¾-Ñ‚Ð¾ Ð±Ð¾Ñ‚Ñƒ Ð² Ð»Ð¸Ñ‡ÐºÑƒ.")
+			bot.send_message(message.chat.id, "Произошла ошибка при создании инвойса. Пожалуйста, напишите что-то боту в личку.")
 
 
 @bot.message_handler(commands=['admin_send_files'])
@@ -737,16 +737,16 @@ def handle_send_files(message):
     try:
         user_id = message.from_user.id
         if user_id != 1130692453:
-            bot.send_message(message.chat.id, "Ð£ Ð²Ð°Ñ Ð½ÐµÑ‚ Ð¿Ñ€Ð°Ð² Ð½Ð° Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÐµÐ½Ð¸Ðµ ÑÑ‚Ð¾Ð¹ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñ‹!")
+            bot.send_message(message.chat.id, "У вас нет прав на выполнение этой команды!")
             return
         filenames = message.text.split()[1:]
         if len(filenames) == 0:
-            bot.reply_to(message, "ÐŸÐ¾Ð¶Ð°Ð»ÑƒÐ¹ÑÑ‚Ð°, ÑƒÐºÐ°Ð¶Ð¸Ñ‚Ðµ Ð¸Ð¼ÐµÐ½Ð° Ñ„Ð°Ð¹Ð»Ð¾Ð² Ð´Ð»Ñ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ¸.")
+            bot.reply_to(message, "Пожалуйста, укажите имена файлов для отправки.")
             return
         send_files(message.chat.id, filenames)
     except Exception as e:
-        bot.reply_to(message, f"ÐžÑˆÐ¸Ð±ÐºÐ°: {e}")
-        print(f"ÐžÑˆÐ¸Ð±ÐºÐ°: {e}")  # Ð’Ñ‹ÐÐ¾Ð´Ð¸Ð¼ Ð¾ÑˆÐ¸Ð±ÐºÑƒ Ð² ÐºÐ¾Ð½ÑÐ¾Ð»ÑŒ Ð´Ð»Ñ Ð¾Ñ‚Ð»Ð°Ð´ÐºÐ¸
+        bot.reply_to(message, f"Ошибка: {e}")
+        print(f"Ошибка: {e}")
 
 def send_files(chat_id, filenames):
     try:
@@ -754,36 +754,36 @@ def send_files(chat_id, filenames):
             with open(filename, 'rb') as file:
                 bot.send_document(chat_id, file)
     except Exception as e:
-        bot.send_message(chat_id, f"ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» {filename}: {e}")
-        print(f"ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» {filename}: {e}")
+        bot.send_message(chat_id, f"Не удалось отправить файл {filename}: {e}")
+        print(f"Не удалось отправить файл {filename}: {e}")
 
 
 @bot.message_handler(func=lambda message: True)
 def handle_text(message):
     try:
-        if message.text in ["/chai", "Ñ‡Ð°Ð¹", "Ð§Ð°Ð¹"]:
+        if message.text in ["/chai", "чай", "Чай"]:
             send_random_tea(message)
-        elif message.text in ["/chai_top", "Ñ‡Ð°Ð¹ Ñ‚Ð¾Ð¿", "Ð§Ð°Ð¹ Ñ‚Ð¾Ð¿", "Ð¢Ð¾Ð¿ Ñ‡Ð°Ñ", "Ñ‚Ð¾Ð¿ Ñ‡Ð°Ñ"]:
+        elif message.text in ["/chai_top", "чай топ", "Чай топ", "Топ чая", "топ чая"]:
             chai_top(message)
-        elif message.text in ["/knock", "ÐºÐ½Ð¾Ðº", "ÐšÐ½Ð¾Ðº", "Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÐºÐ°Ñ€Ñ‚Ñƒ", "ÐŸÐ¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÐºÐ°Ñ€Ñ‚Ñƒ"]:
+        elif message.text in ["/knock", "кнок", "Кнок", "получить карту", "Получить карту"]:
             knock_cards_function(message)
-        elif message.text in ["/krone", "ÐºÑ€Ð¾Ð½Ð°", "ÐšÑ€Ð¾Ð½Ð°", "Ð¼Ð¾Ð½ÐµÑ‚Ð°", "ÐœÐ¾Ð½ÐµÑ‚Ð°"]:
+        elif message.text in ["/krone", "крона", "Крона", "монета", "Монета"]:
             handle_stocoin(message)
-        elif message.text in ["/shop", "Ð¼Ð°Ð³Ð°Ð·Ð¸Ð½", "ÐœÐ°Ð³Ð°Ð·Ð¸Ð½", "ÑˆÐ¾Ð¿", "Ð¨Ð¾Ð¿"]:
+        elif message.text in ["/shop", "магазин", "Магазин", "шоп", "Шоп"]:
             handle_shop(message)
-        elif message.text in ["/goods", "ÐŸÐ¾ÐºÑƒÐ¿ÐºÐ¸", "Ð¿Ð¾ÐºÑƒÐ¿ÐºÐ¸"]:
+        elif message.text in ["/goods", "Покупки", "покупки"]:
             handle_goods(message)
-        elif message.text in ["/profile", "ÐŸÑ€Ð¾Ñ„Ð¸Ð»ÑŒ", "Ð¿Ñ€Ð¾Ñ„Ð¸Ð»ÑŒ"]:
+        elif message.text in ["/profile", "Профиль", "профиль"]:
             handle_profile(message)
-        elif message.text in ["/cards_top", "Ð¢Ð¾Ð¿ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐµÐº", "Ñ‚Ð¾Ð¿ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐµÐº"]:
+        elif message.text in ["/cards_top", "Топ карточек", "топ карточек"]:
             cards_top(message)
-        elif message.text in ["/prem", "Ð¿Ñ€ÐµÐ¼Ð¸ÑƒÐ¼", "ÐŸÑ€ÐµÐ¼Ð¸ÑƒÐ¼"]:
+        elif message.text in ["/prem", "премиум", "Премиум"]:
             buy_premium(message)
     except Exception as e:
-        bot.send_message(message.chat.id, "Ð’Ñ€ÐµÐ¼ÐµÐ½Ð½Ð°Ñ Ð¾ÑˆÐ¸Ð±ÐºÐ° Ð² Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐµ, Ð¿Ð¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚Ðµ Ð¿Ð¾Ð·Ð¶Ðµ.")
-        bot.send_message(1130692453, f"ÐŸÑ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° Ð¾ÑˆÐ¸Ð±ÐºÐ° Ð¿Ñ€Ð¸ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐµ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñ‹: Ð² Ñ‡Ð°Ñ‚Ðµ: {message.chat.id}. ÐžÑˆÐ¸Ð±ÐºÐ°: {e}")
+        bot.send_message(message.chat.id, "Временная ошибка в обработке, повторите позже.")
+        bot.send_message(1130692453, f"Произошла ошибка при обработке команды: в чате: {message.chat.id}. Ошибка: {e}")
 
 try:
 	bot.infinity_polling()
 except Exception as e:
-	print(f"ÐžÑˆÐ¸Ð±ÐºÐ° {e}")
+	print(f"Ошибка {e}")
