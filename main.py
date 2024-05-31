@@ -340,47 +340,54 @@ def show_cards(call):
 
 
 def handle_stocoin(message):
-	try:
-		user_id = str(message.from_user.id)
-		username = message.from_user.username
-		current_time = time.time()
+    try:
+        user_id = str(message.from_user.id)
+        not_str_user_id = message.from_user.id
+        username = message.from_user.username
+        current_time = time.time()
+        chat_member = bot.get_chat_member('@birdy_ichannel', not_str_user_id)
+        if chat_member.status not in ['member', 'administrator', 'creator']:
+            markup = InlineKeyboardMarkup()
+            subscribe_button = InlineKeyboardButton("Подписаться", url="t.me/birdy_ichannel")
+            markup.add(subscribe_button)
+            bot.send_message(message.chat.id, "Пожалуйста, подпишитесь на наш канал, чтобы получать кроны.", reply_markup=markup)
+            return
 
-		try:
-			with open("user_coins.json", 'r') as file:
-				data = json.load(file)
-		except FileNotFoundError:
-			data = {}
+        try:
+            with open("user_coins.json", 'r') as file:
+                data = json.load(file)
+        except FileNotFoundError:
+            data = {}
 
-		last_request_time = data.get(user_id, {}).get("last_request_time", 0)
-		if current_time - last_request_time < 1500:  # 5 minutes cooldown
-			remaining_time = 1500 - (current_time - last_request_time)
-			minutes, seconds = divmod(remaining_time, 60)
-			bot.reply_to(message, f"Вы уже получили кроны. Попробуйте через {int(minutes)} минут {int(seconds)} секунд.")
-			return
+        last_request_time = data.get(user_id, {}).get("last_request_time", 0)
+        if current_time - last_request_time < 1500:  # 5 minutes cooldown
+            remaining_time = 1500 - (current_time - last_request_time)
+            minutes, seconds = divmod(remaining_time, 60)
+            bot.reply_to(message, f"Вы уже получили кроны. Попробуйте через {int(minutes)} минут {int(seconds)} секунд.")
+            return
 
-		premium_users = load_premium_users()
-		is_premium = user_id in premium_users and datetime.fromisoformat(premium_users[user_id]) > datetime.now()
+        premium_users = load_premium_users()
+        is_premium = user_id in premium_users and datetime.fromisoformat(premium_users[user_id]) > datetime.now()
 
-		if is_premium:
-			coins = random.randint(1, 20)
-		else:
-			coins = random.randint(1, 10)
-		update_user_data(user_id, username, coins)
+        if is_premium:
+            coins = random.randint(1, 20)
+        else:
+            coins = random.randint(1, 10)
+        update_user_data(user_id, username, coins)
 
-		with open("user_coins.json", 'r') as file:
-			data = json.load(file)
-		if user_id not in data:
-			data[user_id] = {"username": username, "coins": coins, "purchases": [], "last_request_time": current_time}
-		else:
-			data[user_id]["last_request_time"] = current_time
-		with open("user_coins.json", 'w') as file:
-			json.dump(data, file, indent=4)
+        with open("user_coins.json", 'r') as file:
+            data = json.load(file)
+        if user_id not in data:
+            data[user_id] = {"username": username, "coins": coins, "purchases": [], "last_request_time": current_time}
+        else:
+            data[user_id]["last_request_time"] = current_time
+        with open("user_coins.json", 'w') as file:
+            json.dump(data, file, indent=4)
 
-		bot.reply_to(message, f"Вы успешно заработали {coins} золотых крон.")
-	except Exception as e:
-		bot.send_message(message.chat.id, f"Временная ошибка в обработке, повторите позже!")
-		print(e)
-
+        bot.reply_to(message, f"Вы успешно заработали {coins} золотых крон.")
+    except Exception as e:
+        bot.send_message(message.chat.id, f"Временная ошибка в обработке, повторите позже!")
+        print(e)
 
 
 def handle_shop(message):
