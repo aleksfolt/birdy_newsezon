@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 import telebot
 from telebot import types
