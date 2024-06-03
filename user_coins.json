@@ -1,27 +1,27 @@
 {
     "1268026433": {
         "username": null,
-        "coins": 71,
+        "coins": 356,
         "purchases": [],
-        "last_request_time": 1717167137.1763577
+        "last_request_time": 1717446396.3771296
     },
     "6841161946": {
         "username": "Sallivan_4444",
-        "coins": 25,
+        "coins": 71,
         "purchases": [],
-        "last_request_time": 1717162766.8672822
+        "last_request_time": 1717430090.5958333
     },
     "2039043522": {
         "username": "myankam",
-        "coins": 15,
+        "coins": 58,
         "purchases": [],
-        "last_request_time": 1717155036.4460042
+        "last_request_time": 1717413977.8837159
     },
     "1130692453": {
         "username": "AleksFolt",
-        "coins": 33,
+        "coins": 76,
         "purchases": [],
-        "last_request_time": 1717161976.9870636
+        "last_request_time": 1717446943.0784667
     },
     "1317584738": {
         "username": "Pinguinwww",
@@ -43,15 +43,15 @@
     },
     "1943676827": {
         "username": "Ghost_1412",
-        "coins": 14,
+        "coins": 59,
         "purchases": [],
-        "last_request_time": 1717155307.6760254
+        "last_request_time": 1717439056.3755198
     },
     "7112211010": {
         "username": "nonenlon",
-        "coins": 54,
+        "coins": 500,
         "purchases": [],
-        "last_request_time": 1717166126.7082918
+        "last_request_time": 1717446939.4470088
     },
     "6704378231": {
         "username": "HA_MHE_P03bICK",
@@ -61,9 +61,9 @@
     },
     "1502901024": {
         "username": "Kirillagu67",
-        "coins": 20,
+        "coins": 21,
         "purchases": [],
-        "last_request_time": 1717164685.8825734
+        "last_request_time": 1717238379.777194
     },
     "5739696284": {
         "username": "Strugina85",
@@ -73,20 +73,62 @@
     },
     "5277274862": {
         "username": "pelmenvkusniy",
-        "coins": 4,
+        "coins": 37,
         "purchases": [],
-        "last_request_time": 1717159969.4895656
+        "last_request_time": 1717328893.955098
     },
     "6031438661": {
         "username": "mrspenis3",
-        "coins": 3,
+        "coins": 72,
         "purchases": [],
-        "last_request_time": 1717162176.3051357
+        "last_request_time": 1717435995.629948
     },
     "1355838956": {
         "username": "Avrrorrka",
+        "coins": 30,
+        "purchases": [],
+        "last_request_time": 1717350555.2385008
+    },
+    "1830228345": {
+        "username": "yahz138",
+        "coins": 28,
+        "purchases": [],
+        "last_request_time": 1717357612.2228599
+    },
+    "6390361231": {
+        "username": "nastechka812",
+        "coins": 77,
+        "purchases": [],
+        "last_request_time": 1717443932.6284559
+    },
+    "1115566834": {
+        "username": "kyterni",
         "coins": 9,
         "purchases": [],
-        "last_request_time": 1717165732.9354095
+        "last_request_time": 1717192780.3934436
+    },
+    "1014493520": {
+        "username": "qmelo5",
+        "coins": 8,
+        "purchases": [],
+        "last_request_time": 1717276217.753995
+    },
+    "1575357056": {
+        "username": "bochi_the_rock69",
+        "coins": 10,
+        "purchases": [],
+        "last_request_time": 1717429788.1171165
+    },
+    "6791935783": {
+        "username": "GEPMANUY",
+        "coins": 8,
+        "purchases": [],
+        "last_request_time": 1717351627.8207476
+    },
+    "1293421988": {
+        "username": null,
+        "coins": 26,
+        "purchases": [],
+        "last_request_time": 1717438545.6099586
     }
 }
