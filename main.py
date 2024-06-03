@@ -183,35 +183,45 @@ def chai_top(message):
 		bot.send_message(1130692453, f"Произошла ошибка при обработке команды: /chai_top в чате: {message.chat.id}. {e}")
 
 
+last_request_time = {}
+
 def send_random_tea(message):
-	user_id = str(message.from_user.id)
-	user_nickname = message.from_user.first_name
-	data = load_data()
-	total_volume = data.get(user_id, {'total_volume': 0, 'last_drink_time': 0})
+    user_id = str(message.from_user.id)
+    user_nickname = message.from_user.first_name
+    current_time = time.time()
 
-	if 'nickname' not in total_volume:
-		total_volume['nickname'] = user_nickname
+    if user_id in last_request_time and (current_time - last_request_time[user_id]) < 0.3:
+        bot.reply_to(message, "Пожалуйста, подождите немного перед следующим запросом.")
+        return
 
-	time_since_last_drink = time.time() - total_volume['last_drink_time']
-	time_left = max(0, 600 - time_since_last_drink)
+    last_request_time[user_id] = current_time
 
-	if time_since_last_drink < 600:
-		remaining_minutes = int(time_left // 60)
-		remaining_seconds = int(time_left % 60)
-		bot.reply_to(message, f"Пожалуйста, подождите еще {remaining_minutes} минут {remaining_seconds} секунд перед следующей чашкой чая.")
-		return
+    data = load_data()
+    total_volume = data.get(user_id, {'total_volume': 0, 'last_drink_time': 0})
 
-	random_tea = random.choice(tea_names)
-	premium_users = load_premium_users()
-	is_premium = user_id in premium_users and datetime.fromisoformat(premium_users[user_id]) > datetime.now()
-	if is_premium:
-		random_volume = random.randint(500, 2000)
-	else:
-		random_volume = random.randint(200, 2000)
-	bot.reply_to(message, f"{total_volume['nickname']} Вы успешно выпили чай\n\nВыпито: {random_volume} мл.\nЧай: {random_tea}\n\nВсего выпито: {total_volume['total_volume'] + random_volume} мл.")
+    if 'nickname' not in total_volume:
+        total_volume['nickname'] = user_nickname
 
-	data[user_id] = {'total_volume': total_volume['total_volume'] + random_volume, 'last_drink_time': time.time(), 'nickname': user_nickname}
-	save_data(data)
+    time_since_last_drink = time.time() - total_volume['last_drink_time']
+    time_left = max(0, 600 - time_since_last_drink)
+
+    if time_since_last_drink < 600:
+        remaining_minutes = int(time_left // 60)
+        remaining_seconds = int(time_left % 60)
+        bot.reply_to(message, f"Пожалуйста, подождите еще {remaining_minutes} минут {remaining_seconds} секунд перед следующей чашкой чая.")
+        return
+
+    random_tea = random.choice(tea_names)
+    premium_users = load_premium_users()
+    is_premium = user_id in premium_users and datetime.fromisoformat(premium_users[user_id]) > datetime.now()
+    if is_premium:
+        random_volume = random.randint(500, 2000)
+    else:
+        random_volume = random.randint(200, 2000)
+    bot.reply_to(message, f"{total_volume['nickname']} Вы успешно выпили чай\n\nВыпито: {random_volume} мл.\nЧай: {random_tea}\n\nВсего выпито: {total_volume['total_volume'] + random_volume} мл.")
+
+    data[user_id] = {'total_volume': total_volume['total_volume'] + random_volume, 'last_drink_time': time.time(), 'nickname': user_nickname}
+    save_data(data)
 
 
 def knock_cards_function(message):
@@ -526,90 +536,97 @@ def cards_top_callback(call):
         bot.send_message(call.message.chat.id, message_text)
 
 
-def handle_profile(message, background_image_path="background_image.jpg"):
-	waiting = bot.send_message(message.chat.id, "Открываю профиль...")
-	user_id = message.from_user.id
-	str_user_id = str(user_id)
-	first_name = message.from_user.first_name
-	last_name = message.from_user.last_name or ""
-	
-	replied_user_id = None
-	if message.reply_to_message:
-		replied_user_id = message.reply_to_message.from_user.id
-	
-	if replied_user_id:
-		user_id = replied_user_id
-		str_user_id = str(user_id)
-		first_name = message.reply_to_message.from_user.first_name
-		last_name = message.reply_to_message.from_user.last_name or ""
+def handle_profile(message, background_image_path="background_image.jpg", premium_background_image_path="background2_image.jpg"):
+    waiting = bot.send_message(message.chat.id, "Открываю профиль...")
+    user_id = message.from_user.id
+    str_user_id = str(user_id)
+    first_name = message.from_user.first_name
+    last_name = message.from_user.last_name or ""
+    
+    replied_user_id = None
+    if message.reply_to_message:
+        replied_user_id = message.reply_to_message.from_user.id
+    
+    if replied_user_id:
+        user_id = replied_user_id
+        str_user_id = str(user_id)
+        first_name = message.reply_to_message.from_user.first_name
+        last_name = message.reply_to_message.from_user.last_name or ""
 
-	data = load_data_cards()
-	user_data = data.get(str_user_id, {'birds': [], 'last_usage': 0, 'points': 0, 'nickname': first_name})
-	collected_cards = len(user_data['birds'])
-	total_cards = len(birds)
-	try:
-		with open("user_coins.json", 'r') as file:
-			data_coin = json.load(file)
-	except FileNotFoundError:
-		bot.send_message(message.chat.id, "Ошибка: данные пользователей не найдены.")
-		return
+    data = load_data_cards()
+    user_data = data.get(str_user_id, {'birds': [], 'last_usage': 0, 'points': 0, 'nickname': first_name})
+    collected_cards = len(user_data['birds'])
+    total_cards = len(birds)
+    try:
+        with open("user_coins.json", 'r') as file:
+            data_coin = json.load(file)
+    except FileNotFoundError:
+        bot.send_message(message.chat.id, "Ошибка: данные пользователей не найдены.")
+        return
 
-	user_data_coin = data_coin.get(str_user_id, {})
-	premium_users = load_premium_users()
-	coins = user_data_coin.get("coins", 0)
-	if str_user_id in premium_users:
-		expiration_time = datetime.fromisoformat(premium_users[str_user_id])
-		remaining_time = expiration_time - datetime.now()
-		if remaining_time.total_seconds() > 0:
-			days = remaining_time.days
-			hours = remaining_time.seconds // 3600
-			minutes = (remaining_time.seconds % 3600) // 60
-			premium_status = f"активен, закончится через {days} дней {hours} часов {minutes} минут"
-		else:
-			premium_status = "истек"
-	else:
-		premium_status = "не активен"
-	caption = f"🏡 Личный профиль {first_name} {last_name}\n🃏 Собрано {collected_cards} карточек из {total_cards} возможных.\n🪙 Ваш баланс крон: {coins} крон.\n🏆 Баланс поинтов: {user_data['points']}\n💎 Премиум статус: {premium_status}"
+    user_data_coin = data_coin.get(str_user_id, {})
+    premium_users = load_premium_users()
+    coins = user_data_coin.get("coins", 0)
+    if str_user_id in premium_users:
+        expiration_time = datetime.fromisoformat(premium_users[str_user_id])
+        remaining_time = expiration_time - datetime.now()
+        if remaining_time.total_seconds() > 0:
+            days = remaining_time.days
+            hours = remaining_time.seconds // 3600
+            minutes = (remaining_time.seconds % 3600) // 60
+            premium_status = f"активен, закончится через {days} дней {hours} часов {minutes} минут"
+            background_image_path = premium_background_image_path
+            avatar_position = (337, 180)
+            avatar_size = (293, 303)
+        else:
+            premium_status = "истек"
+            avatar_position = (275, 144)
+            avatar_size = (378, 398)
+    else:
+        premium_status = "не активен"
+        avatar_position = (275, 144)
+        avatar_size = (378, 398)
+    
+    caption = f"🏡 Личный профиль {first_name} {last_name}\n🃏 Собрано {collected_cards} карточек из {total_cards} возможных.\n🪙 Ваш баланс крон: {coins} крон.\n🏆 Баланс поинтов: {user_data['points']}\n💎 Премиум статус: {premium_status}"
 
-	user_profile_photos = bot.get_user_profile_photos(user_id, limit=1)
-	if user_profile_photos.photos:
-			photo = user_profile_photos.photos[0][-1]
-			file_id = photo.file_id
-			file_info = bot.get_file(file_id)
-			downloaded_file = bot.download_file(file_info.file_path)
-			avatar_stream = BytesIO(downloaded_file)
-	else:
-			avatar_stream = open("avatar.jpg", 'rb')
+    user_profile_photos = bot.get_user_profile_photos(user_id, limit=1)
+    if user_profile_photos.photos:
+        photo = user_profile_photos.photos[0][-1]
+        file_id = photo.file_id
+        file_info = bot.get_file(file_id)
+        downloaded_file = bot.download_file(file_info.file_path)
+        avatar_stream = BytesIO(downloaded_file)
+    else:
+        avatar_stream = open("avatar.jpg", 'rb')
 
-	avatar_image = Image.open(avatar_stream)
+    avatar_image = Image.open(avatar_stream)
 
-	if avatar_image.mode != 'RGBA':
-			avatar_image = avatar_image.convert('RGBA')
+    if avatar_image.mode != 'RGBA':
+        avatar_image = avatar_image.convert('RGBA')
 
-	background_image = Image.open(background_image_path)
-	if background_image.mode != 'RGBA':
-			background_image = background_image.convert('RGBA')
+    background_image = Image.open(background_image_path)
+    if background_image.mode != 'RGBA':
+        background_image = background_image.convert('RGBA')
 
-	avatar_image = avatar_image.resize((378, 398), Image.Resampling.LANCZOS)
+    avatar_image = avatar_image.resize(avatar_size, Image.Resampling.LANCZOS)
 
-	x = 275
-	y = 144
-	background_image.paste(avatar_image, (x, y), avatar_image)
+    background_image.paste(avatar_image, avatar_position, avatar_image)
 
-	final_image_stream = BytesIO()
-	background_image.save(final_image_stream, format='PNG')
-	final_image_stream.seek(0)
-	final_image_stream.name = 'modified_image.jpg'
+    final_image_stream = BytesIO()
+    background_image.save(final_image_stream, format='PNG')
+    final_image_stream.seek(0)
+    final_image_stream.name = 'modified_image.jpg'
 
-	unique_number = random.randint(1000, 99999999)
-	user_button[str_user_id] = unique_number
-	keyboard = telebot.types.InlineKeyboardMarkup(row_width=2)
-	button_1 = telebot.types.InlineKeyboardButton(text="Мои карточки", callback_data=f'show_cards_{unique_number}')
-	button_2 = telebot.types.InlineKeyboardButton(text="Купить крутку", callback_data=f'crutka_cards_{unique_number}')
-	button_3 = telebot.types.InlineKeyboardButton(text="Премиум", callback_data=f'birdy_prem_{unique_number}')
-	keyboard.add(button_1, button_2, button_3)
-	bot.delete_message(message.chat.id, waiting.message_id)
-	bot.send_photo(message.chat.id, photo=final_image_stream, caption=caption, reply_markup=keyboard)
+    unique_number = random.randint(1000, 99999999)
+    user_button[str_user_id] = unique_number
+    keyboard = telebot.types.InlineKeyboardMarkup(row_width=2)
+    button_1 = telebot.types.InlineKeyboardButton(text="Мои карточки", callback_data=f'show_cards_{unique_number}')
+    button_2 = telebot.types.InlineKeyboardButton(text="Купить крутку", callback_data=f'crutka_cards_{unique_number}')
+    button_3 = telebot.types.InlineKeyboardButton(text="Премиум", callback_data=f'birdy_prem_{unique_number}')
+    keyboard.add(button_1, button_2, button_3)
+    bot.delete_message(message.chat.id, waiting.message_id)
+    bot.send_photo(message.chat.id, photo=final_image_stream, caption=caption, reply_markup=keyboard)
+
 
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith(f'birdy_prem'))
@@ -635,7 +652,10 @@ def crutki(call):
 	keyboard = telebot.types.InlineKeyboardMarkup(row_width=2)
 	button_1 = telebot.types.InlineKeyboardButton(text="Купить", callback_data=f'buying_crutka_{unique_number}')
 	keyboard.add(button_1)
-	bot.send_message(call.message.chat.id, f"Купить крутку. Цена: 50000 поинтов:\nБаланс поинтов: {user_data['points']}", reply_markup=keyboard)
+	premium_users = load_premium_users()
+	is_premium = user_id in premium_users and datetime.fromisoformat(premium_users[user_id]) > datetime.now()
+	delay = 45000 if is_premium else 50000
+	bot.send_message(call.message.chat.id, f"Купить крутку. Цена: {delay} поинтов:\nБаланс поинтов: {user_data['points']}", reply_markup=keyboard)
 	
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('buying_crutka'))
@@ -647,10 +667,13 @@ def buy_crutka(call):
         return
     
     data = load_data_cards()
+    premium_users = load_premium_users()
+    is_premium = user_id in premium_users and datetime.fromisoformat(premium_users[user_id]) > datetime.now()
+    delay = 45000 if is_premium else 50000
     user_nickname = call.from_user.first_name
     user_data = data.get(user_id, {'birds': [], 'last_usage': 0, 'points': 0, 'nickname': user_nickname})
     
-    if user_data['points'] >= 50000:
+    if user_data['points'] >= delay:
         excluded_birds = ["Птичка зефирка", "Птичка тортик", "Птичка печенька", "Птичка Круассан"]
         
         eligible_birds = [bird for bird in birds if bird["rarity"] == "Крутка" and bird["name"] not in excluded_birds]
@@ -665,7 +688,7 @@ def buy_crutka(call):
         
         if chosen_bird and chosen_bird['name'] not in user_data['birds']:
             user_data['birds'].append(chosen_bird['name'])
-            user_data['points'] -= 50000
+            user_data['points'] -= delay
             data[user_id] = user_data
             save_data_2(data)
             photo_data = chosen_bird['photo']
