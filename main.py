@@ -674,7 +674,7 @@ def buy_crutka(call):
     user_data = data.get(user_id, {'birds': [], 'last_usage': 0, 'points': 0, 'nickname': user_nickname})
     
     if user_data['points'] >= delay:
-        excluded_birds = ["Птичка зефирка", "Птичка тортик", "Птичка печенька", "Птичка Круассан"]
+        excluded_birds = ["Птичка зефирка", "Птичка тортик", "Птичка печенька", "Птичка Круассан", "Птица бог воды", "Птица бог огня", "Птица бог камня", "Птица бог грома", "Птица бог растений"]
         
         eligible_birds = [bird for bird in birds if bird["rarity"] == "Крутка" and bird["name"] not in excluded_birds]
         chosen_bird = None
