@@ -355,10 +355,10 @@ def handle_stocoin(message):
         not_str_user_id = message.from_user.id
         username = message.from_user.username
         current_time = time.time()
-        chat_member = bot.get_chat_member('@birdy_ichannel', not_str_user_id)
+        chat_member = bot.get_chat_member('@komaru_production', not_str_user_id)
         if chat_member.status not in ['member', 'administrator', 'creator']:
             markup = InlineKeyboardMarkup()
-            subscribe_button = InlineKeyboardButton("Подписаться", url="t.me/birdy_ichannel")
+            subscribe_button = InlineKeyboardButton("Подписаться", url="t.me/komaru_production")
             markup.add(subscribe_button)
             bot.send_message(message.chat.id, "Пожалуйста, подпишитесь на наш канал, чтобы получать кроны.", reply_markup=markup)
             return
